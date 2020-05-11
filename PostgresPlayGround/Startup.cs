@@ -6,10 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PostgresPlayGround.Db;
+using PostgresPlayGround.Services;
 
 namespace PostgresPlayGround
 {
@@ -26,6 +29,12 @@ namespace PostgresPlayGround
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            var pg_conn = Configuration.GetConnectionString("PostgreSQLConnection");
+            services.AddDbContextPool<PlaygroundContext>(contextBuilder => { contextBuilder.UseNpgsql(pg_conn); },128);
+
+            services.AddScoped(typeof(IGoodsRepository), typeof(GoodsRepository));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
