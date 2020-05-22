@@ -1,0 +1,9 @@
+<h3>Hot Goods</h3>
+<div class="grid grid-pad">
+    <a *ngFor="let good of goods" class="col-1-4" routerLink="/detail/{{good.id}}">
+        <div class="module good">
+            <h4>{{good.name}}</h4>
+        </div>
+    </a>
+</div>
+<app-search></app-search>

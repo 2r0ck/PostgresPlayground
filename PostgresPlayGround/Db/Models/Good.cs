@@ -14,7 +14,7 @@ namespace PostgresPlayGround.Db.Models
 
         public string Name { get; set; }
 
-        public int ColorId { get; set; }
+        public int? ColorId { get; set; }
 
         [ForeignKey("ColorId")]
         public virtual GoodColor Color {get;set;}

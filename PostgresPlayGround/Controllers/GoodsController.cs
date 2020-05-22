@@ -23,7 +23,7 @@ namespace PostgresPlayGround.Controllers
         [HttpGet]
         public IEnumerable<GoodViewModel> Get()
         {
-            return _goodsRepository.GetRange(0, 100).Select(x => new GoodViewModel(x)).ToList();
+            return _goodsRepository.GetAll().Select(x => new GoodViewModel(x)).ToList();
         }
 
         // GET: api/Goods/5
@@ -35,20 +35,26 @@ namespace PostgresPlayGround.Controllers
 
         // POST: api/Goods
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] GoodViewModel value)
         {
-        }
-
-        // PUT: api/Goods/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
+            if (value != null)
+            {
+                _goodsRepository.AddOrUpdate(value);
+            }
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _goodsRepository.Delete(id);
+        }
+
+        [HttpGet]
+        [Route("search")]
+        public IEnumerable<GoodViewModel> GetByName(string name)
+        {
+            return _goodsRepository.GetByName(name).Select(x => new GoodViewModel(x)).ToList();
         }
     }
 }

@@ -1,0 +1,18 @@
+<h2>My Goods</h2>
+<ul class="goods">
+    <li *ngFor="let good of goods">
+        <a routerLink="/detail/{{good.id}}">
+            <span class="badge">{{good.id}}</span> {{good.name}}
+        </a>
+        <button class="delete" title="delete" (click)="delete(good)">x</button>
+    </li>
+</ul>
+<div>
+    <label>Good desc:
+        <input #goodName />
+    </label>
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button (click)="add(goodName.value); goodName.value=''">
+        add
+    </button>
+</div>
